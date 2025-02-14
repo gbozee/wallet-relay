@@ -11,7 +11,7 @@ It's built on the [Khatru](https://khatru.nostr.technology) framework.
 
 ## Setup Instructions
 
-Follow these steps to get the RelayDiscovery Relay running on your local machine:
+Follow these steps to get the Wallet Relay running on your local machine:
 
 ### 1. Clone the repository
 
