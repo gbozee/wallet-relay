@@ -54,11 +54,9 @@ func main() {
 		panic(err)
 	}
 
-	relay.StoreEvent = append(relay.StoreEvent, db.SaveEvent)
-	relay.QueryEvents = append(relay.QueryEvents, db.QueryEvents)
-
 	relay.RejectFilter = append(relay.RejectFilter, func(ctx context.Context, filter nostr.Filter) (bool, string) {
 		if !containsOnlyWalletKids(filter.Kinds) {
+			fmt.Println("attempted to subscribe to non-wallet kinds", filter.Kinds)
 			return true, "invalid-filter: only wallet kinds are allowed"
 		}
 
@@ -67,11 +65,16 @@ func main() {
 
 	relay.RejectEvent = append(relay.RejectEvent, func(ctx context.Context, event *nostr.Event) (bool, string) {
 		if !containsOnlyWalletKids([]int{event.Kind}) {
+			fmt.Println("attempted to publish non-wallet kind", event.Kind)
 			return true, "invalid-event: only wallet kinds are allowed"
 		}
 
 		return false, ""
 	})
+
+	relay.StoreEvent = append(relay.StoreEvent, db.SaveEvent)
+	relay.QueryEvents = append(relay.QueryEvents, db.QueryEvents)
+	relay.ReplaceEvent = append(relay.ReplaceEvent, db.ReplaceEvent)
 
 	addr := fmt.Sprintf("%s:%s", "0.0.0.0", config.RelayPort)
 
