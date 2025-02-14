@@ -26,7 +26,7 @@ var walletKinds = []int{
 	17375,
 	7375,
 	7376,
-	7376,
+	7374,
 }
 
 type Config struct {
