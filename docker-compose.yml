@@ -1,0 +1,17 @@
+volumes:
+  relay_data: {}
+  ts-state: {}
+services:
+  relay:
+    container_name: wallet-relay
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - "relay_data:/app/db"
+      # - "./templates/index.html:${INDEX_PATH}"
+      # - "./templates/static:${STATIC_PATH}"
+    # ports:
+    #   - "6102:6102"
